@@ -7,9 +7,9 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     SequelizeModule.forRoot({
       dialect: 'mysql',
-      host: 'localhost',
-      username: 'root',
-      database: 'auth',
+      host: process.env.HOST || 'localhost',
+      username: process.env.USER_NAME || 'root',
+      database: process.env.DATABASE || 'auth',
       autoLoadModels: true,
       synchronize: true,
     }),
