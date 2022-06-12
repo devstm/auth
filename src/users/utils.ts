@@ -1,20 +1,18 @@
 import { verify, sign } from 'jsonwebtoken';
 
-const verifyToken = (token) =>
-  new Promise((resolve, reject) => {
-    verify(token, process.env.SECRET_KEY, (err, match) => {
-      if (err) return reject(err);
-      return resolve(match);
-    });
-  });
 export const signToken = (providerName, userId) =>
   new Promise((resolve, reject) => {
-    sign({ providerName, providerID: userId }, 'saleh', (err, token) => {
-      if (err) {
-        return reject(err);
-      }
-      return resolve(token);
-    });
+    sign(
+      { providerName, providerID: userId },
+      process.env.SECRET_KEY,
+      (err, token) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(token);
+      },
+      { expiresIn: '1h' },
+    );
   });
 
-module.exports = { verifyToken, signToken };
+module.exports = { signToken };

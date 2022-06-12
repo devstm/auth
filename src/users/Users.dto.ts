@@ -25,7 +25,6 @@ export class LoginDto {
   @IsString()
   password: string;
 }
-
 export class UserDto {
   id: number;
   username: string;

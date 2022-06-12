@@ -1,15 +1,14 @@
 import {
   BadRequestException,
-  HttpException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Optional } from 'sequelize/types';
-import { UserType, LoginDto, UserDto } from './Types';
-import { User } from './users.model';
 import { Op } from 'sequelize';
 import { hash, compare } from 'bcryptjs';
+import { UserType, LoginDto, UserDto } from './Users.dto';
+import { User } from './users.model';
 import { signToken } from './utils';
 
 @Injectable()
@@ -45,6 +44,8 @@ export class UsersService {
   }
 
   async login(userType: Optional<LoginDto, any>): Promise<UserDto> {
+    console.log(process.env.HOST, process.env.USER_NAME, process.env.DATABASE);
+
     try {
       const { username, password } = userType;
       const user = await this.userModel.findOne({
