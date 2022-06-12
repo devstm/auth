@@ -9,7 +9,7 @@ import { Op } from 'sequelize';
 import { hash, compare } from 'bcryptjs';
 import { UserType, LoginDto, UserDto } from './Users.dto';
 import { User } from './users.model';
-import { signToken } from './utils';
+import { signToken } from '../../common';
 
 @Injectable()
 export class UsersService {
@@ -44,8 +44,6 @@ export class UsersService {
   }
 
   async login(userType: Optional<LoginDto, any>): Promise<UserDto> {
-    console.log(process.env.HOST, process.env.USER_NAME, process.env.DATABASE);
-
     try {
       const { username, password } = userType;
       const user = await this.userModel.findOne({
