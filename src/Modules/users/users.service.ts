@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -14,7 +15,7 @@ import { signToken } from '../../common';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(User)
+    @Inject('USER_REPOSITORY')
     private readonly userModel: typeof User,
   ) {}
   async create(userType: Optional<UserType, any>): Promise<User> {
