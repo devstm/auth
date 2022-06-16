@@ -4,7 +4,6 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
 import { Optional } from 'sequelize/types';
 import { Op } from 'sequelize';
 import { hash, compare } from 'bcryptjs';
@@ -32,14 +31,12 @@ export class UsersService {
       }
       if (msg) throw new BadRequestException(msg);
       const hashedPassword = await hash(password, 10);
-      const sa = await this.userModel.create({
+      const createdUser = await this.userModel.create({
         ...userType,
         password: hashedPassword,
       });
-      console.log(sa);
-      return sa;
+      return createdUser;
     } catch (e) {
-      console.log(e);
       return e;
     }
   }
@@ -62,7 +59,6 @@ export class UsersService {
         token: signTokenCookie,
       };
     } catch (e) {
-      console.log(e);
       return e;
     }
   }
@@ -72,7 +68,6 @@ export class UsersService {
         where: { id },
       });
     } catch (e) {
-      console.log(e);
       return e;
     }
   }

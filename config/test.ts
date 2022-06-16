@@ -4,6 +4,6 @@ export default () => ({
     dialect: 'mysql',
     host: process.env.HOST,
     username: process.env.USER_NAME,
-    database: process.env.DATABASE,
+    database: process.env.DATABASE_TEST,
   },
 });

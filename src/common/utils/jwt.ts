@@ -4,7 +4,7 @@ export const signToken = (providerName, userId) =>
   new Promise((resolve, reject) => {
     sign(
       { providerName, providerID: userId },
-      process.env.SECRET_KEY,
+      process.env.SECRET_KEY || 'ildeaoemuesotnovacah',
       (err, token) => {
         if (err) {
           return reject(err);
