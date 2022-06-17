@@ -10,7 +10,6 @@ import { hash, compare } from 'bcryptjs';
 import { UserType, LoginDto, UserDto } from './Users.dto';
 import { User } from './users.model';
 import { signToken } from '../../common';
-
 @Injectable()
 export class UsersService {
   constructor(
@@ -50,7 +49,7 @@ export class UsersService {
       if (!user) throw new NotFoundException('User not found');
       const isMatch = await compare(password, user.password);
       if (!isMatch) throw new BadRequestException('Wrong password');
-      const signTokenCookie = await signToken(user.username, user.id);
+      const signTokenCookie = await signToken(user.id);
       return {
         id: user.id,
         username: user.username,

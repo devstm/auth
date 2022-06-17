@@ -1,10 +1,10 @@
 import { sign } from 'jsonwebtoken';
 
-export const signToken = (providerName, userId) =>
+export const signToken = (userId: number) =>
   new Promise((resolve, reject) => {
     sign(
-      { providerName, providerID: userId },
-      process.env.SECRET_KEY || 'ildeaoemuesotnovacah',
+      { userId },
+      process.env.APP_SECRET_KEY || 's',
       (err, token) => {
         if (err) {
           return reject(err);
