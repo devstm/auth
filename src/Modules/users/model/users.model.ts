@@ -5,20 +5,23 @@ import {
   DeletedAt,
   CreatedAt,
   UpdatedAt,
+  DataType,
 } from 'sequelize-typescript';
+
+const { STRING } = DataType;
 
 @Table
 export class User extends Model {
-  @Column
+  @Column(STRING)
   username: string;
 
-  @Column
+  @Column(STRING)
   phone: string;
 
-  @Column
+  @Column(STRING)
   email: string;
 
-  @Column
+  @Column(STRING)
   password: string;
 
   @CreatedAt

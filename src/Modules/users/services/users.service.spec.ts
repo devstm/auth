@@ -2,9 +2,9 @@ import { BadRequestException } from '@nestjs/common';
 import { getModelToken } from '@nestjs/sequelize';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Sequelize } from 'sequelize-typescript';
-import { userProviders } from './user.provide';
-import { UsersController } from './users.controller';
-import { User } from './users.model';
+import { userProviders } from './user.providers';
+import { UsersController } from '../controller/users.controller';
+import { User } from '../model/users.model';
 import { UsersService } from './users.service';
 const sequelize = new Sequelize({
   dialect: 'mysql',

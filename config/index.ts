@@ -1,16 +1,9 @@
-import dev from './development';
-import prod from './production';
+import development from './development';
+import production from './production';
 import test from './test';
 
-let config;
-if (process.env.NODE_ENV === 'development') {
-  config = dev;
-} else if (process.env.NODE_ENV === 'production') {
-  config = prod;
-} else if (process.env.NODE_ENV === 'test') {
-  config = test;
-} else {
-  config = dev;
-}
-
-export default config;
+export default {
+  development,
+  production,
+  test,
+}[process.env.NODE_ENV || 'development'];

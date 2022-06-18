@@ -1,10 +1,11 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { userProviders } from './user.provide';
-import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
-import { Sequelize } from 'sequelize-typescript';
-import { User } from './users.model';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import { Sequelize } from 'sequelize-typescript';
+import { userProviders } from '../services/user.providers';
+import { UsersService } from '../services/users.service';
+import { UsersController } from './users.controller';
+import { User } from '../model/users.model';
+
 const sequelize = new Sequelize({
   dialect: 'mysql',
   host: 'localhost',

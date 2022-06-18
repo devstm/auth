@@ -1,9 +1,10 @@
 export default () => ({
   port: 3000,
   database: {
-    dialect: 'mysql',
-    host: process.env.HOST,
-    username: process.env.USER_NAME,
-    database: process.env.DATABASE,
+    dialect: process.env.DB_CONNECTION,
+    host: process.env.DB_HOST,
+    username: process.env.DB_USERNAME,
+    database: process.env.DB_PRODUCTION,
+    password: process.env.DB_PASSWORD,
   },
 });
