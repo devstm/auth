@@ -1,0 +1,83 @@
+import { Inject, Injectable } from '@nestjs/common';
+import { TASK_REPOSITORY, exclude } from 'src/common/constants';
+import { taskNotFound } from 'src/common/messages';
+import { CustomError } from 'src/common/utils';
+import { User } from 'src/modules/users/model/users.model';
+import { TaskCreateDTO } from '../dto/taskCreate.dto';
+import { Task } from '../model/tasks.model';
+
+@Injectable()
+export class TasksService {
+  constructor(
+    @Inject(TASK_REPOSITORY)
+    private readonly taskModel: typeof Task,
+  ) {}
+
+  async getAll(userId: number): Promise<Task[]> {
+    return await this.taskModel.findAll({
+      where: { userId },
+      include: [
+        {
+          model: User,
+          attributes: {
+            exclude,
+          },
+        },
+      ],
+    });
+  }
+
+  async getOne(id: number): Promise<Task> {
+    const task = await this.taskModel.findByPk(id, {
+      include: [
+        {
+          model: User,
+          attributes: {
+            exclude,
+          },
+        },
+      ],
+    });
+    if (!task) {
+      throw new CustomError(taskNotFound, 400);
+    }
+    return task;
+  }
+
+  async create(createTask: TaskCreateDTO): Promise<Task> {
+    const { title, description, status, userId } = createTask;
+    return await this.taskModel.create({
+      title,
+      description,
+      status,
+      userId,
+    });
+  }
+  async update(id: number, taskUpdate: TaskCreateDTO): Promise<any> {
+    const task = await this.taskModel.findByPk(id);
+    if (!task) {
+      throw new CustomError(taskNotFound, 400);
+    }
+    const { title, description, status, userId } = taskUpdate;
+    return await this.taskModel.update(
+      {
+        title,
+        description,
+        status,
+        userId,
+      },
+      {
+        where: { id },
+      },
+    );
+  }
+  async delete(id: number): Promise<any> {
+    const task = await this.taskModel.findByPk(id);
+    if (!task) {
+      throw new CustomError(taskNotFound, 400);
+    }
+    return await this.taskModel.destroy({
+      where: { id },
+    });
+  }
+}

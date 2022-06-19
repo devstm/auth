@@ -6,7 +6,9 @@ import {
   CreatedAt,
   UpdatedAt,
   DataType,
+  HasMany,
 } from 'sequelize-typescript';
+import { Task } from 'src/modules/tasks/model/tasks.model';
 
 const { STRING } = DataType;
 
@@ -32,4 +34,7 @@ export class User extends Model {
 
   @DeletedAt
   deletedAt: Date;
+
+  @HasMany(() => Task)
+  tasks: Task[];
 }

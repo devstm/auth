@@ -1,4 +1,4 @@
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 
 export const signToken = (userId: number) =>
   new Promise((resolve, reject) => {
@@ -15,4 +15,10 @@ export const signToken = (userId: number) =>
     );
   });
 
-module.exports = { signToken };
+export const verifyToken = (token) =>
+  new Promise((resolve, reject) => {
+    verify(token, process.env.APP_SECRET_KEY, (err, match) => {
+      if (err) return reject(err);
+      return resolve(match);
+    });
+  });
