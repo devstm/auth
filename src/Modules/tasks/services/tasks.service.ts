@@ -12,7 +12,6 @@ export class TasksService {
     @Inject(TASK_REPOSITORY)
     private readonly taskModel: typeof Task,
   ) {}
-
   async getAll(userId: number): Promise<Task[]> {
     return await this.taskModel.findAll({
       where: { userId },
@@ -56,6 +55,7 @@ export class TasksService {
       userId,
     });
   }
+
   async update(
     id: number,
     taskUpdate: TaskCreateDTO,
