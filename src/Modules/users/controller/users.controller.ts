@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Param,
+  ParseIntPipe,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -26,8 +27,8 @@ export class UsersController {
     return this.userService.login(userLogin);
   }
   @UseGuards(AuthGuard)
-  @Delete(':id')
-  deleteUser(@Param('id') id: number): Promise<any> {
+  @Delete(':userId')
+  deleteUser(@Param('userId', ParseIntPipe) id: number): Promise<any> {
     return this.userService.deleteUser(id);
   }
 }

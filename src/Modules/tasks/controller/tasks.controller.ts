@@ -6,10 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { taskControllerName } from 'src/common/constants';
 import { AuthGuard } from 'src/common/guards/auth.gard';
+import { CustomError } from 'src/common/utils';
 import { TaskCreateDTO } from '../dto/taskCreate.dto';
 import { Task } from '../model/tasks.model';
 import { TasksService } from '../services/tasks.service';
@@ -20,13 +22,16 @@ export class TasksController {
   constructor(private taskService: TasksService) {}
 
   @Get(':userId')
-  index(@Param('userId') userId: number): Promise<Task[]> {
+  index(@Param('userId') userId: number, @Req() request: any): Promise<Task[]> {
+    if (request.userId !== userId) {
+      throw new CustomError('You are not authorized', 401);
+    }
     return this.taskService.getAll(userId);
   }
 
-  @Get(':id')
-  show(@Param('id') id: number): Promise<Task> {
-    return this.taskService.getOne(id);
+  @Get('task/:id')
+  show(@Param('id') id: number, @Req() request: any): Promise<Task> {
+    return this.taskService.getOne(id, request.userId);
   }
 
   @Post()
@@ -37,12 +42,13 @@ export class TasksController {
   update(
     @Body() taskUpdate: TaskCreateDTO,
     @Param('id') id: number,
+    @Req() request: any,
   ): Promise<Task> {
-    return this.taskService.update(id, taskUpdate);
+    return this.taskService.update(id, taskUpdate, request.userId);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number): Promise<any> {
-    return this.taskService.delete(id);
+  delete(@Param('id') id: number, @Req() request: any): Promise<any> {
+    return this.taskService.delete(id, request.userId);
   }
 }
