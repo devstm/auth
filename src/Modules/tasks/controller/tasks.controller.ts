@@ -9,7 +9,6 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { taskControllerName } from 'src/common/constants';
 import { AuthGuard } from 'src/common/guards/auth.gard';
 import { CustomError } from 'src/common/utils';
 import { TaskCreateDTO } from '../dto/taskCreate.dto';
@@ -17,7 +16,7 @@ import { Task } from '../model/tasks.model';
 import { TasksService } from '../services/tasks.service';
 
 @UseGuards(AuthGuard)
-@Controller(taskControllerName)
+@Controller('tasks')
 export class TasksController {
   constructor(private taskService: TasksService) {}
 

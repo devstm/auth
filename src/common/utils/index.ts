@@ -1,3 +1,2 @@
-import { signToken } from './jwt';
-import { CustomError } from './CustumError';
-export { signToken, CustomError };
+export * from './CustumError';
+export * from './jwt';
