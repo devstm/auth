@@ -51,4 +51,12 @@ export class UsersService {
     await user.destroy();
     return user;
   }
+  async findOne(id: number): Promise<User> {
+    const user = await this.userModel.findOne({
+      where: { id },
+      attributes: { exclude: ['password'] },
+    });
+    if (!user) throw new CustomError(userNotFound, 400);
+    return user;
+  }
 }
