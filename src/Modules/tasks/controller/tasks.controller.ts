@@ -3,26 +3,17 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Patch,
   Post,
-  Req,
   UseGuards,
 } from '@nestjs/common';
-import { Role } from 'src/auth/role.enum';
-import { User } from 'src/auth/roles.decorator';
-// import { Roles } from 'src/auth/roles.decorator';
-import { AuthGuard } from 'src/common/guards/auth.gard';
-import { UserGuard } from 'src/common/guards/role.gard';
-import { CustomError } from 'src/common/utils';
+
+import { User } from 'src/common/decorators/user.decorator';
+import { UserGuard, AuthGuard } from 'src/common/guards';
+import { TaskParams } from 'src/common/types';
 import { TaskCreateDTO } from '../dto/taskCreate.dto';
 import { Task } from '../model/tasks.model';
 import { TasksService } from '../services/tasks.service';
-
-interface TaskParams {
-  id: number;
-  userId: number;
-}
 
 @Controller('tasks')
 export class TasksController {

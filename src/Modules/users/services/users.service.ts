@@ -3,7 +3,7 @@ import { hash, compare } from 'bcryptjs';
 import { User } from '../model/users.model';
 import { CustomError, signToken } from '../../../common/utils';
 import { UserLoginDTO, UserSignUpDTO } from '../dto';
-import { UserWithToken } from '../../../common/types';
+import { IUser } from '../../../common/types';
 import { USER_REPOSITORY } from 'src/common/constants';
 import {
   userAlreadyExists,
@@ -30,7 +30,7 @@ export class UsersService {
     return await this.userModel.create(newUser);
   }
 
-  async login(userType: UserLoginDTO): Promise<UserWithToken> {
+  async login(userType: UserLoginDTO): Promise<IUser> {
     const { username, password } = userType;
     const user = await this.userModel.findOne({
       where: { username },

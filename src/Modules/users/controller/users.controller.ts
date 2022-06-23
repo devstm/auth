@@ -8,10 +8,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserLoginDTO, UserSignUpDTO } from '../dto';
-import { UserWithToken } from '../../../common/types';
+import { IUser } from '../../../common/types';
 import { User } from '../model/users.model';
 import { UsersService } from '../services/users.service';
-import { AuthGuard } from 'src/common/guards/auth.gard';
+import { AuthGuard } from 'src/common/guards';
 
 @Controller('users')
 export class UsersController {
@@ -22,7 +22,7 @@ export class UsersController {
     return this.userService.create(userSignup);
   }
   @Post('login')
-  login(@Body() userLogin: UserLoginDTO): Promise<UserWithToken> {
+  login(@Body() userLogin: UserLoginDTO): Promise<IUser> {
     return this.userService.login(userLogin);
   }
   @UseGuards(AuthGuard)
